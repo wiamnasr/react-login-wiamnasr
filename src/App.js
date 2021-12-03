@@ -7,10 +7,11 @@ import MainHeader from "./components/MainHeader/MainHeader";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Executed after every component re-evaluation but only if the dependencies changed [], he no dependencies (runs once, when app starts)
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
 
-    // This creates an infinite loop, that why we need useEffect
+    // This creates an infinite loop by itself, that's why we need useEffect
     if (storedUserLoggedInInformation === "1") {
       setIsLoggedIn(true);
     }

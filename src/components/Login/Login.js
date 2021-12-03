@@ -73,37 +73,35 @@ const Login = (props) => {
   // Ommitting setFormIsValid (state updating function) from the dependencies array as its guaranteed not to change unlike enteredEmail and enteredPassword
   // Note, we need to debounce the user input (we dont want to do something with every keystroke, but wait until user stopped typing to trigger)
   // with useEffect this can be achieved easily with setTimeout
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log("Checking form validity!");
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("Checking form validity!");
 
-  //     // Setting a timer for every keystroke (500 ms) after which setFormIsValid is run
-  //     // The trick is to save the item and with the next keystroke, we clear it (1 ongoing timer at a time, only the last one will complete)
-  //     setFormIsValid(
-  //       enteredEmail.includes("@") && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
+      // Setting a timer for every keystroke (500 ms) after which setFormIsValid is run
+      // The trick is to save the item and with the next keystroke, we clear it (1 ongoing timer at a time, only the last one will complete)
+      setFormIsValid(emailState.isValid && passwordState.isValid);
+    }, 500);
 
-  //   // I can return something in the useEffect, here returning an anonymous arrow function (cleanup function before useEffect executes the function for the next time)
-  //   // This will run every time except for the first side-effect function execution
-  //   return () => {
-  //     // Using the identifier to clear the previous timer with the built-in clearTimeout function
-  //     clearTimeout(identifier);
-  //     console.log("CLEANUP");
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+    // I can return something in the useEffect, here returning an anonymous arrow function (cleanup function before useEffect executes the function for the next time)
+    // This will run every time except for the first side-effect function execution
+    return () => {
+      // Using the identifier to clear the previous timer with the built-in clearTimeout function
+      clearTimeout(identifier);
+      console.log("CLEANUP");
+    };
+  }, [emailState, passwordState]);
 
   const emailChangeHandler = (event) => {
     // here since I want to save what the user entered, it would make sense to add some payload (here added the val field that holds the event.target.value)
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
+    // setFormIsValid(event.target.value.includes("@") && passwordState.isValid);
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+    // setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   const validateEmailHandler = () => {

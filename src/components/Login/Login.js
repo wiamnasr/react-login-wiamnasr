@@ -60,14 +60,18 @@ const Login = (props) => {
   // Without the dependency array, the useEffect function will run every time this component function reruns (after it)
   // If we add an empty array as a dependency, the useEffect will run only once, when the component is first mounted
   // Alternatively if we add a dependency/ies in the dependency array such as the enteredPassword, this will cause useEffect function to run whenever the state of enteredPassword changes (and other defined dependencies, here only one)
-  // useEffect(() => {
-  //   console.log("Effect Running");
+  useEffect(() => {
+    console.log("Effect Running");
 
-  //   // clean-up function that runs before the state function as a whole runs, but not before the first time it runs
-  //   return () => {
-  //     console.log("EFFECT CLEANUP");
-  //   };
-  // }, [enteredPassword]);
+    // clean-up function that runs before the state function as a whole runs, but not before the first time it runs
+    return () => {
+      console.log("EFFECT CLEANUP");
+    };
+  }, []);
+
+  // Object Destructuring, pulling our isValid property and storing it in emailIsValid const => this is then passed as dependency to avoid un-necessary useEffect executions
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
 
   // This useEffect will run only if either setFormIsValid, or enteredEmail or enteredPassword changed in the last component re-render cycle
   // Ommitting setFormIsValid (state updating function) from the dependencies array as its guaranteed not to change unlike enteredEmail and enteredPassword
@@ -79,17 +83,17 @@ const Login = (props) => {
 
       // Setting a timer for every keystroke (500 ms) after which setFormIsValid is run
       // The trick is to save the item and with the next keystroke, we clear it (1 ongoing timer at a time, only the last one will complete)
-      setFormIsValid(emailState.isValid && passwordState.isValid);
+      setFormIsValid(emailIsValid && passwordIsValid);
     }, 500);
 
     // I can return something in the useEffect, here returning an anonymous arrow function (cleanup function before useEffect executes the function for the next time)
     // This will run every time except for the first side-effect function execution
     return () => {
+      console.log("CLEANUP");
       // Using the identifier to clear the previous timer with the built-in clearTimeout function
       clearTimeout(identifier);
-      console.log("CLEANUP");
     };
-  }, [emailState, passwordState]);
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
     // here since I want to save what the user entered, it would make sense to add some payload (here added the val field that holds the event.target.value)

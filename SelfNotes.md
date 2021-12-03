@@ -31,3 +31,15 @@ useReducer is used instead of useState when:
                 => a function that is triggered automatically once an action is dispatched (via disatchedFn()) - it receives the latest state snapshot and should return the new, updated state
 
 > Additionally, "initialState" and "initialFn" that should run to set that initial state, in case the initial state is bit more complex (i.e. the result of an HTTP request) => will ignore these for now
+
+<br />
+
+## useReducer() vs useState() when to use which?
+
+when using useState becomes cumbersome, or you are getting a lot of bugs/ unintended behaviors
+
+When dealing with related state snapshots
+
+useState is the main state management tool, great for independent states of data that are easy and limited to a few kinds of updates
+
+useReducer is great if you need more power, especially helpful in a scenario of complex state updates

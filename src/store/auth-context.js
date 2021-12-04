@@ -5,6 +5,7 @@ import React from "react";
 // the AuthContext itself is not a component, but an object that will contain a component later on
 const AuthContext = React.createContext({
   isLoggedIn: false,
+  onLogout: () => {},
 });
 
 export default AuthContext;

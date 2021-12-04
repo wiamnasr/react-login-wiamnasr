@@ -41,10 +41,12 @@ function App() {
       <AuthContext.Provider
         value={{
           isLoggedIn: isLoggedIn,
+          onLogout: logoutHandler,
         }}
       >
-        <MainHeader onLogout={logoutHandler} />
+        <MainHeader />
         <main>
+          {/* I will still pass loginHandler and logoutHandler directly in the main section as I directly use these handlers in the login and home components */}
           {!isLoggedIn && <Login onLogin={loginHandler} />}
           {isLoggedIn && <Home onLogout={logoutHandler} />}
         </main>

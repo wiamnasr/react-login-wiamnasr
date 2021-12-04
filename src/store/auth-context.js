@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Calling create context on react that takes a default context (the context is really the app wide or component wide state)
 // it can be a text string, but often its an object as below
@@ -11,16 +11,29 @@ const AuthContext = React.createContext({
   onLogin: (email, password) => {},
 });
 
-
-
-const AuthContextProvider = (props) => {
+// Managing all the authentication state in this separate provider component
+export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Executed after every component re-evaluation but only if the dependencies changed [], he no dependencies (runs once, when app starts)
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem("isLoggedIn");
+
+    // This creates an infinite loop by itself, that's why we need useEffect
+    if (storedUserLoggedInInformation === "1") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const logoutHandler = () => {
+    localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
   };
 
   const loginHandler = () => {
+    localStorage.setItem("isLoggedIn", "1");
     setIsLoggedIn(true);
   };
 

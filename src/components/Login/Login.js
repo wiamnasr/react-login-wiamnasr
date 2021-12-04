@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../../store/auth-context";
 
 // Creating the reducer function outside the component function, I do not need any data that is generated in the component
 // Receives 2 parameters, the last state snapshot and the action that was dispatched
@@ -56,6 +57,9 @@ const Login = (props) => {
     value: "",
     isValid: null,
   });
+
+  // Setting up AuthContext
+  const authCtx = useContext(AuthContext);
 
   // Without the dependency array, the useEffect function will run every time this component function reruns (after it)
   // If we add an empty array as a dependency, the useEffect will run only once, when the component is first mounted
@@ -121,7 +125,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (

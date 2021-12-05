@@ -43,3 +43,31 @@ When dealing with related state snapshots
 useState is the main state management tool, great for independent states of data that are easy and limited to a few kinds of updates
 
 useReducer is great if you need more power, especially helpful in a scenario of complex state updates
+
+<br />
+
+<br />
+
+<h1> REACT Concept Limitations </h1>
+
+#### REMEMBER!
+
+## Use props for configuration, Context for state management across components or across other apps
+
+## React Context is NOT optimized for high frequency changes
+
+## Later on Redux will solve a lot of current limitation, for now use context to replace long prop chains
+
+<br />
+
+<br />
+
+# Rules of Hooks
+
+> 2 main rules for hooks (useEffect, useReducer, ...)
+
+## 1. Only Call react hooks in React functions (component functions and custom hooks - will dive into that later)
+
+## 2. Only call React hooks at the top level of your React component functions or custom hooks functions
+
+> ### 3. Third Rule, Not directly related to all hooks, but to the useEffect hook: Make sure you add everything you refer to inside useEffect as a dependency, unless there is a good reason not to do that (allowed to omit dependencies that do not change)

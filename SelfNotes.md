@@ -48,7 +48,7 @@ useReducer is great if you need more power, especially helpful in a scenario of 
 
 <br />
 
-<h1> REACT Concept Limitations </h1>
+<h1> REACT Context Limitations </h1>
 
 #### REMEMBER!
 
